@@ -1,0 +1,13 @@
+﻿@model MyAcdemy_Portfolio.Entities.Education
+@{
+    ViewData["Title"] = "Eğitim Güncelle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    ViewData["FormAction"] = "UpdateEducation";
+    ViewData["FormTitle"] = "Eğitim Bilgisini Güncelle";
+}
+
+<partial name="_EducationForm" model="Model" view-data="ViewData" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

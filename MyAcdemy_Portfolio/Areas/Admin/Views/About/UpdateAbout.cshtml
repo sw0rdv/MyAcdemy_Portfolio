@@ -1,0 +1,68 @@
+﻿@model MyAcdemy_Portfolio.Entities.About
+@{
+    ViewData["Title"] = "Hakkımda";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Hakkımda</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Hakkımda Güncelle</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-sub">
+                            Sitedeki Hakkımda bölümünde görünen bilgileri buradan güncelleyebilirsiniz.
+                        </div>
+
+                        <form method="post">
+                            <input type="hidden" asp-for="AboutID" />
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="NameSurname">Ad Soyad</label>
+                                    <input type="text" asp-for="NameSurname" class="form-control" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="JobTitle">Meslek / Unvan</label>
+                                    <input type="text" asp-for="JobTitle" class="form-control" />
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Location">Konum</label>
+                                    <input type="text" asp-for="Location" class="form-control" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Expert">Uzmanlık</label>
+                                    <input type="text" asp-for="Expert" class="form-control" />
+                                </div>
+
+                               <div class="col-md-6 mb-3">
+                                    <label asp-for="Email">E-posta</label>
+                                    <input type="email" asp-for="Email" class="form-control" />
+                                </div>
+                                <div class="col-md-6 mb-3 d-flex align-items-end">
+                                    <div class="form-check">
+                                        <input type="checkbox" asp-for="OpentoWork" class="form-check-input" />
+                                        <label asp-for="OpentoWork" class="form-check-label">İş tekliflerine açığım</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label asp-for="Description">Hakkımda Yazısı</label>
+                                    <textarea asp-for="Description" class="form-control" rows="8"></textarea>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-success">Kaydet</button>
+                            <a href="/Admin/Dashboard/Index" class="btn btn-secondary">Vazgeç</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

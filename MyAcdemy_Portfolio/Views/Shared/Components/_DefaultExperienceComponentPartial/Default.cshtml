@@ -1,0 +1,69 @@
+@model List<MyAcdemy_Portfolio.Entities.Experience>
+@using System.Net
+@{
+    var colors = new[] { "bg-icon-purple", "bg-icon-blue", "bg-icon-peach", "bg-icon-mint" };
+
+    // Çalışma türüne göre rozet rengi
+    string WorkTypeClass(string? type)
+    {
+        var t = (type ?? "").ToLower();
+        if (t.Contains("staj")) return "bg-warning-subtle text-warning border border-warning-subtle";
+        if (t.Contains("yarı") || t.Contains("part")) return "bg-primary-subtle text-primary border border-primary-subtle";
+        return "bg-success-subtle text-success border border-success-subtle";
+    }
+
+    // Açıklamadaki her satır bir madde olarak listelenir
+    string BuildCard(MyAcdemy_Portfolio.Entities.Experience item, int i)
+    {
+        var lines = (item.Description ?? "").Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        var body = lines.Length > 1
+            ? "<ul class=\"text-secondary small ps-3 mb-0\" style=\"line-height: 1.6;\">" + string.Concat(lines.Select(l => $"<li>{WebUtility.HtmlEncode(l.TrimStart('-', '•', ' '))}</li>")) + "</ul>"
+            : $"<p class=\"text-secondary small mb-0\">{WebUtility.HtmlEncode(item.Description)}</p>";
+
+        return $@"<div class=""timeline-content-card"">
+            <div class=""d-flex justify-content-between align-items-start mb-2"">
+                <span class=""badge-year {colors[i % colors.Length]}""><i class=""bi bi-briefcase""></i> {WebUtility.HtmlEncode(item.Duration)}</span>
+                <span class=""badge {WorkTypeClass(item.WorkType)} rounded-pill px-3 py-1 small"">{WebUtility.HtmlEncode(item.WorkType)}</span>
+            </div>
+            <h4 class=""fs-5 fw-bold mb-1"">{WebUtility.HtmlEncode(item.Title)}</h4>
+            <div class=""text-primary fw-semibold small mb-3"">{WebUtility.HtmlEncode(item.CompanyName)}</div>
+            {body}
+        </div>";
+    }
+}
+
+<!-- Work Experience Section -->
+<section id="experience">
+    <div class="container">
+        <div class="text-center mb-5 reveal-on-scroll">
+            <span class="section-eyebrow">PROFESYONEL YOLCULUK</span>
+            <h2 class="section-title">Deneyimlerim</h2>
+            <p class="section-subtitle">Gerçek dünya problemlerini çözerken edindiğim tecrübeler.</p>
+        </div>
+
+        <div class="timeline-container">
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                <div class="timeline-item row align-items-center g-4 reveal-on-scroll">
+                    @if (i % 2 == 0)
+                    {
+                        <div class="col-lg-6 timeline-left order-2 order-lg-1">@Html.Raw(BuildCard(item, i))</div>
+                        <div class="timeline-marker"><i class="bi bi-building"></i></div>
+                        <div class="col-lg-6 timeline-right order-1 order-lg-2 d-none d-lg-block">
+                            <div class="text-secondary small fst-italic">@item.SideTitle</div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-6 timeline-left d-none d-lg-block">
+                            <div class="text-secondary small fst-italic">@item.SideTitle</div>
+                        </div>
+                        <div class="timeline-marker"><i class="bi bi-pc-display"></i></div>
+                        <div class="col-lg-6 timeline-right">@Html.Raw(BuildCard(item, i))</div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</section>

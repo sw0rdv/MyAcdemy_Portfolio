@@ -1,0 +1,65 @@
+@model MyAcdemy_Portfolio.Entities.Contact
+@{
+    ViewData["Title"] = "İletişim Bilgileri";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">İletişim Bilgileri</h4>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">İletişim Bilgilerini Güncelle</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-sub">
+                            Sitedeki İletişim bölümünde görünen e-posta, konum ve açıklama bilgilerini buradan güncelleyebilirsiniz.
+                        </div>
+
+                        <form method="post" asp-area="Admin" asp-controller="Contact" asp-action="UpdateContact">
+                            <input type="hidden" asp-for="ContactId" />
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Email">E-posta</label>
+                                    <input type="email" asp-for="Email" class="form-control" placeholder="ornek@mail.com" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Location">Konum</label>
+                                    <input type="text" asp-for="Location" class="form-control" placeholder="İstanbul, Türkiye" />
+                                </div>
+
+                                @* GitHub / LinkedIn artık Sosyal Medya ekranından yönetiliyor; eski değerler silinmesin diye gizli tutulur *@
+                                <input type="hidden" asp-for="Linkedin" />
+                                <input type="hidden" asp-for="Github" />
+                                <div class="col-12 mb-3">
+                                    <div class="alert alert-light border d-flex align-items-center gap-2 mb-0">
+                                        <i class="bi bi-share"></i>
+                                        GitHub, LinkedIn ve diğer hesaplar
+                                        <a href="/Admin/SocialMedia/SocialMediaList" class="fw-semibold">Sosyal Medya</a> ekranından yönetilir.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label asp-for="Description">Açıklama</label>
+                                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label asp-for="SubDescription">Alt Not (örn: Genellikle 24 saat içinde yanıt verilir.)</label>
+                                    <input type="text" asp-for="SubDescription" class="form-control" />
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-success">Kaydet</button>
+                            <a href="/Admin/Dashboard/Index" class="btn btn-secondary">Vazgeç</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

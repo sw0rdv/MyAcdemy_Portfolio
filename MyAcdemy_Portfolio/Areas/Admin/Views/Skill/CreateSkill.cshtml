@@ -1,0 +1,13 @@
+@model MyAcdemy_Portfolio.Entities.Skill
+@{
+    ViewData["Title"] = "Yeni Yetenek";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    ViewData["FormAction"] = "CreateSkill";
+    ViewData["FormTitle"] = "Yeni Yetenek Ekle";
+}
+
+<partial name="_SkillForm" model="Model" view-data="ViewData" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

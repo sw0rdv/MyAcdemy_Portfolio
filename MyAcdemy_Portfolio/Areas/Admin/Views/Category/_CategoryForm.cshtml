@@ -1,0 +1,30 @@
+@model MyAcdemy_Portfolio.Entities.Category
+
+<div class="form-card" style="max-width: 640px;">
+    <form asp-area="Admin" asp-controller="Category" asp-action="@ViewData["FormAction"]" method="post">
+        <input type="hidden" asp-for="CategoryID" />
+
+        <div class="form-card-header">
+            <div class="form-card-icon"><i class="bi bi-tags"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">@ViewData["FormTitle"]</h5>
+                <small class="text-secondary">Kategori adı benzersiz olmalıdır.</small>
+            </div>
+        </div>
+
+        <div class="form-card-body">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+            <label asp-for="CategoryName" class="form-label">Kategori Adı <span class="req">*</span></label>
+            <div class="input-icon-wrap">
+                <i class="bi bi-tag"></i>
+                <input asp-for="CategoryName" class="form-control" placeholder="Örn: Web Geliştirme" />
+            </div>
+            <span asp-validation-for="CategoryName"></span>
+        </div>
+
+        <div class="form-card-footer">
+            <a href="/Admin/Category/CategoryList" class="btn btn-soft"><i class="bi bi-arrow-left me-1"></i> Vazgeç</a>
+            <button type="submit" class="btn btn-accent"><i class="bi bi-check2-circle me-1"></i> Kaydet</button>
+        </div>
+    </form>
+</div>

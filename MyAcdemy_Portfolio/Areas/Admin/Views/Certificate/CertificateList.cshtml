@@ -1,0 +1,51 @@
+@model List<MyAcdemy_Portfolio.Entities.Certificate>
+
+@{
+    ViewData["Title"] = "Sertifikalarım";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container">
+    <br />
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Sertifikalarım</h4>
+        <a href="/Admin/Certificate/CreateCertificate" class="btn btn-secondary">Yeni Sertifika Ekle</a>
+    </div>
+
+    <table class="table table-bordered table-hover align-middle">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Sertifika</th>
+                <th>Kurum</th>
+                <th>Yıl</th>
+                <th>Bağlantı</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr><td colspan="7" class="text-center text-secondary">Henüz sertifika eklenmedi.</td></tr>
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CertificateID</td>
+                    <td>@item.Title</td>
+                    <td>@item.Issuer</td>
+                    <td>@item.Year</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.CertificateUrl))
+                        {
+                            <a href="@item.CertificateUrl" target="_blank" rel="noopener">Görüntüle</a>
+                        }
+                    </td>
+                    <td><a href="/Admin/Certificate/DeleteCertificate/@item.CertificateID" class="btn btn-danger btn-sm js-delete" data-name="@item.Title">Sil</a></td>
+                    <td><a href="/Admin/Certificate/UpdateCertificate/@item.CertificateID" class="btn btn-primary btn-sm">Güncelle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,533 @@
+@model List<MyAcdemy_Portfolio.Entities.Message>
+@{
+    ViewData["Title"] = "Mesajlar";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+
+    var tr = new System.Globalization.CultureInfo("tr-TR");
+    var mesajlar = Model;   // Arama, filtre ve sıralama controller'da (EF Core sorgusu) yapılır
+    int toplam = (int)ViewBag.TotalCount;
+    int okunmayan = (int)ViewBag.UnreadCount;
+    int okunan = toplam - okunmayan;
+    string search = ViewBag.Search as string ?? "";
+    string status = ViewBag.Status as string ?? "all";
+    string sort = ViewBag.Sort as string ?? "desc";
+
+    string[] tonlar = { "tone-purple", "tone-mint", "tone-peach", "tone-blue" };
+
+    string BasHarf(string ad)
+    {
+        if (string.IsNullOrWhiteSpace(ad)) return "?";
+        return string.Concat(ad.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                               .Take(2)
+                               .Select(x => char.ToUpper(x[0], tr)));
+    }
+
+    string FilterUrl(string st) => $"/Admin/Message/MessageList?status={st}&sort={sort}&search={Uri.EscapeDataString(search)}";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+<style>
+    .ml {
+        color: #26334A;
+        padding: 8px 0 24px;
+    }
+
+    .ml-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 20px;
+    }
+
+        .ml-top h3 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .ml-top p {
+            margin: 4px 0 0;
+            color: #78849A;
+            font-size: .9rem;
+        }
+
+    .ml-search {
+        position: relative;
+        min-width: 260px;
+    }
+
+        .ml-search i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #A0A9BA;
+        }
+
+        .ml-search input {
+            width: 100%;
+            padding: 11px 14px 11px 40px;
+            border: 1px solid #E7EAF2;
+            border-radius: 12px;
+            font-size: .9rem;
+            background: #fff;
+            outline: none;
+            transition: .2s;
+        }
+
+            .ml-search input:focus {
+                border-color: #B9B0F0;
+                box-shadow: 0 0 0 4px rgba(130, 118, 217, .12);
+            }
+
+    .ml-stats {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+    }
+
+    .ml-stat {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        border-radius: 14px;
+        background: #fff;
+        border: 1px solid #E7EAF2;
+        font-size: .85rem;
+        color: #78849A;
+    }
+
+        .ml-stat b {
+            color: #26334A;
+            font-size: 1.05rem;
+        }
+
+    .ml-filter {
+        display: flex;
+        gap: 8px;
+        margin-left: auto;
+    }
+
+        .ml-filter button {
+            border: 1px solid #E7EAF2;
+            background: #fff;
+            color: #26334A;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: .82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+            .ml-filter button.active, .ml-filter button:hover {
+                background: #8276D9;
+                border-color: #8276D9;
+                color: #fff;
+            }
+
+    .ml-card {
+        background: #fff;
+        border: 1px solid #E7EAF2;
+        border-radius: 20px;
+        box-shadow: 0 4px 18px rgba(38, 51, 74, .05);
+        overflow: hidden;
+    }
+
+    .ml-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: .9rem;
+    }
+
+        .ml-table th {
+            text-align: left;
+            padding: 14px 18px;
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: #78849A;
+            font-weight: 700;
+            background: #FAFBFF;
+            border-bottom: 1px solid #EEF0F6;
+        }
+
+        .ml-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #F3F4F9;
+            vertical-align: middle;
+        }
+
+        .ml-table tbody tr {
+            transition: background .15s;
+        }
+
+            .ml-table tbody tr:hover {
+                background: #FAFAFF;
+            }
+
+            .ml-table tbody tr:last-child td {
+                border-bottom: none;
+            }
+
+        .ml-table tr.unread td {
+            background: #FDFBFF;
+        }
+
+        .ml-table tr.unread .ml-subject {
+            font-weight: 700;
+        }
+
+    .ml-sender {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+        .ml-sender strong {
+            display: block;
+            font-weight: 600;
+        }
+
+        .ml-sender small {
+            color: #78849A;
+            font-size: .78rem;
+        }
+
+    .ml-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        font-size: .8rem;
+        flex-shrink: 0;
+    }
+
+    .tone-purple {
+        background: #EEEAFD;
+        color: #6A5DCB;
+    }
+
+    .tone-mint {
+        background: #E1F5EB;
+        color: #2E9B6A;
+    }
+
+    .tone-peach {
+        background: #FFEEE2;
+        color: #D97A3A;
+    }
+
+    .tone-blue {
+        background: #E3EEFB;
+        color: #3F7BD8;
+    }
+
+    .ml-id {
+        color: #A0A9BA;
+        font-size: .8rem;
+        font-weight: 600;
+    }
+
+    .ml-date {
+        color: #78849A;
+        font-size: .85rem;
+        white-space: nowrap;
+    }
+
+    .ml-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 11px;
+        border-radius: 999px;
+        font-size: .74rem;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+        .ml-status::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .ml-status.new {
+            background: #FFEEE2;
+            color: #D97A3A;
+        }
+
+        .ml-status.read {
+            background: #E1F5EB;
+            color: #2E9B6A;
+        }
+
+    .ml-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+    }
+
+    .ml-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        text-decoration: none;
+        transition: .2s;
+        font-size: .95rem;
+    }
+
+        .ml-btn.open {
+            background: #EEEAFD;
+            color: #6A5DCB;
+        }
+
+            .ml-btn.open:hover {
+                background: #8276D9;
+                color: #fff;
+            }
+
+        .ml-btn.del {
+            background: #FDECEC;
+            color: #D64545;
+        }
+
+            .ml-btn.del:hover {
+                background: #D64545;
+                color: #fff;
+            }
+
+    .ml-empty {
+        text-align: center;
+        padding: 56px 20px;
+        color: #78849A;
+    }
+
+        .ml-empty i {
+            font-size: 2.4rem;
+            color: #B9B0F0;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+    @@media (max-width: 768px) {
+        .ml-table .hide-sm {
+            display: none;
+        }
+
+        .ml-filter {
+            margin-left: 0;
+        }
+    }
+</style>
+
+<div class="ml">
+
+    <!-- Arama + sıralama (sunucu tarafı, GET) -->
+    <form method="get" action="/Admin/Message/MessageList" class="ml-top">
+        <input type="hidden" name="status" value="@status" />
+        <div class="ml-search">
+            <i class="bi bi-search"></i>
+            <input type="text" name="search" value="@search" placeholder="Gönderen, e-posta veya konu ara..." />
+        </div>
+        <div class="d-flex gap-2 align-items-center">
+            <select name="sort" class="form-select" style="border-radius:12px; min-width:170px;" onchange="this.form.submit()">
+                <option value="desc" selected="@(sort != "asc")">En yeni önce</option>
+                <option value="asc" selected="@(sort == "asc")">En eski önce</option>
+            </select>
+            <button type="submit" class="btn btn-accent">Ara</button>
+            @if (!string.IsNullOrEmpty(search))
+            {
+                <a href="/Admin/Message/MessageList" class="btn btn-soft">Temizle</a>
+            }
+        </div>
+    </form>
+
+    <div class="ml-stats">
+        <div class="ml-stat"><i class="bi bi-envelope"></i> Toplam <b>@toplam</b></div>
+        <div class="ml-stat"><i class="bi bi-envelope-exclamation"></i> Okunmamış <b id="unreadCount">@okunmayan</b></div>
+        <div class="ml-stat"><i class="bi bi-envelope-open"></i> Okunmuş <b>@okunan</b></div>
+
+        <div class="ml-filter">
+            <a href="@FilterUrl("all")"><button type="button" class="@(status == "all" ? "active" : "")">Tümü</button></a>
+            <a href="@FilterUrl("unread")"><button type="button" class="@(status == "unread" ? "active" : "")">Okunmamış</button></a>
+            <a href="@FilterUrl("read")"><button type="button" class="@(status == "read" ? "active" : "")">Okunmuş</button></a>
+        </div>
+    </div>
+
+    <div class="ml-card">
+        @if (!mesajlar.Any())
+        {
+            <div class="ml-empty">
+                <i class="bi bi-inbox"></i>
+                @(toplam == 0 ? "Henüz mesaj yok." : "Aramanıza uygun mesaj bulunamadı.")
+            </div>
+        }
+        else
+        {
+            <div style="overflow-x:auto;">
+                <table class="ml-table">
+                    <thead>
+                        <tr>
+                            <th>Gönderen</th>
+                            <th>Konu</th>
+                            <th class="hide-sm">Tarih</th>
+                            <th>Durum</th>
+                            <th style="text-align:right;">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < mesajlar.Count; i++)
+                        {
+                            var item = mesajlar[i];
+                            <tr class="@(item.IsRead ? "" : "unread")" id="msg-row-@item.MessageID">
+                                <td>
+                                    <div class="ml-sender">
+                                        <span class="ml-avatar @tonlar[i % tonlar.Length]">@BasHarf(item.NameSurname)</span>
+                                        <div>
+                                            <strong>@item.NameSurname</strong>
+                                            <small>@item.Email</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="ml-subject">@item.Subject</td>
+                                <td class="hide-sm"><span class="ml-date">@item.SendDate.ToString("dd MMMM yyyy HH:mm", tr)</span></td>
+                                <td class="msg-status">
+                                    @if (item.IsRead)
+                                    {
+                                        <span class="ml-status read">Okundu</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="ml-status new">Yeni</span>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="ml-actions">
+                                        <!-- Mesaj içeriği data-* ile modala taşınır; textContent ile basılır, düzenlenemez -->
+                                        <button type="button" class="ml-btn open border-0 js-open-message" title="Mesajı Aç"
+                                                data-id="@item.MessageID"
+                                                data-name="@item.NameSurname"
+                                                data-email="@item.Email"
+                                                data-subject="@item.Subject"
+                                                data-date="@item.SendDate.ToString("dd MMMM yyyy, HH:mm", tr)"
+                                                data-body="@item.MessageDetail"
+                                                data-read="@(item.IsRead ? "1" : "0")">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                        <form method="post" action="/Admin/Message/DeleteMessage/@item.MessageID" class="js-delete-form m-0" data-name="@item.Subject">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="ml-btn del border-0" title="Mesajı Sil"><i class="bi bi-trash3"></i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Mesaj Detay Modalı -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content" style="border-radius:20px; border:none;">
+            <div class="modal-header" style="border-bottom:1px solid #EEF0F6;">
+                <div>
+                    <h5 class="modal-title fw-bold" id="messageModalTitle"></h5>
+                    <small class="text-secondary" id="messageModalDate"></small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded-3" style="background:#FAFBFF;">
+                    <span class="ml-avatar tone-purple" id="messageModalAvatar"></span>
+                    <div>
+                        <strong id="messageModalName"></strong>
+                        <div><a id="messageModalEmail" class="text-decoration-none small"></a></div>
+                    </div>
+                </div>
+                <!-- white-space: pre-wrap -> satır sonları korunur; içerik salt okunur -->
+                <div id="messageModalBody" style="white-space: pre-wrap; line-height:1.7; color:#26334A;"></div>
+            </div>
+            <div class="modal-footer" style="border-top:1px solid #EEF0F6;">
+                <form method="post" id="messageModalUnreadForm" class="m-0">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-soft"><i class="bi bi-envelope me-1"></i> Okunmadı yap</button>
+                </form>
+                <a id="messageModalReply" class="btn btn-accent"><i class="bi bi-reply me-1"></i> Yanıtla</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+
+@section Scripts {
+<script>
+    (function () {
+        const modalEl = document.getElementById('messageModal');
+        const modal = new bootstrap.Modal(modalEl);
+        const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+        function initials(name) {
+            return name.split(' ').filter(Boolean).slice(0, 2).map(x => x[0].toLocaleUpperCase('tr-TR')).join('');
+        }
+
+        function openMessage(btn) {
+            const d = btn.dataset;
+            document.getElementById('messageModalTitle').textContent = d.subject;
+            document.getElementById('messageModalDate').textContent = d.date;
+            document.getElementById('messageModalName').textContent = d.name;
+            document.getElementById('messageModalAvatar').textContent = initials(d.name);
+            const email = document.getElementById('messageModalEmail');
+            email.textContent = d.email;
+            email.href = 'mailto:' + d.email;
+            document.getElementById('messageModalBody').textContent = d.body;
+            document.getElementById('messageModalReply').href =
+                'mailto:' + d.email + '?subject=' + encodeURIComponent('Re: ' + d.subject);
+            document.getElementById('messageModalUnreadForm').action = '/Admin/Message/MarkAsUnread/' + d.id;
+            modal.show();
+
+            // İlk açılışta okundu olarak işaretle (sadece IsRead değişir, içerik değişmez)
+            if (d.read === '0') {
+                fetch('/Admin/Message/MarkAsRead/' + d.id, {
+                    method: 'POST',
+                    headers: { 'RequestVerificationToken': token }
+                })
+                .then(r => r.ok ? r.json() : null)
+                .then(res => {
+                    if (!res) return;
+                    d.read = '1';
+                    const row = document.getElementById('msg-row-' + d.id);
+                    row.classList.remove('unread');
+                    row.querySelector('.msg-status').innerHTML = '<span class="ml-status read">Okundu</span>';
+                    document.getElementById('unreadCount').textContent = res.unread;
+                });
+            }
+        }
+
+        document.querySelectorAll('.js-open-message').forEach(btn =>
+            btn.addEventListener('click', () => openMessage(btn)));
+
+        // Dashboard'dan gelindiyse (?open=ID) ilgili mesajı otomatik aç
+        const openId = new URLSearchParams(location.search).get('open');
+        if (openId) {
+            const btn = document.querySelector('.js-open-message[data-id="' + openId + '"]');
+            if (btn) openMessage(btn);
+        }
+    })();
+</script>
+}

@@ -1,0 +1,25 @@
+@* Liste sayfalarında #tableSearch kutusuna yazılanla #dataTable satırlarını anlık filtreler *@
+<script>
+    (function () {
+        const input = document.getElementById('tableSearch');
+        const table = document.getElementById('dataTable');
+        if (!input || !table) return;
+
+        const rows = table.querySelectorAll('tbody tr');
+        const emptyRow = document.createElement('tr');
+        emptyRow.innerHTML = '<td colspan="20" class="text-center text-secondary py-4">Aramanıza uygun kayıt bulunamadı.</td>';
+        emptyRow.style.display = 'none';
+        table.querySelector('tbody').appendChild(emptyRow);
+
+        input.addEventListener('input', function () {
+            const q = this.value.toLocaleLowerCase('tr-TR').trim();
+            let visible = 0;
+            rows.forEach(r => {
+                const match = r.innerText.toLocaleLowerCase('tr-TR').includes(q);
+                r.style.display = match ? '' : 'none';
+                if (match) visible++;
+            });
+            emptyRow.style.display = visible === 0 ? '' : 'none';
+        });
+    })();
+</script>

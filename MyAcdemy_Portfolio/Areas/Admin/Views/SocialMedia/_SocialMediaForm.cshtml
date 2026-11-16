@@ -1,0 +1,108 @@
+@model MyAcdemy_Portfolio.Entities.SocialMedia
+@{
+    // Platform -> Bootstrap Icons sınıfı
+    var icons = new List<(string Name, string Icon)>
+    {
+        ("GitHub", "bi-github"), ("LinkedIn", "bi-linkedin"), ("X (Twitter)", "bi-twitter-x"),
+        ("Instagram", "bi-instagram"), ("YouTube", "bi-youtube"), ("Medium", "bi-medium"),
+        ("Facebook", "bi-facebook"), ("Stack Overflow", "bi-stack-overflow"), ("Discord", "bi-discord"),
+        ("Telegram", "bi-telegram"), ("WhatsApp", "bi-whatsapp"), ("Behance", "bi-behance"),
+        ("Dribbble", "bi-dribbble"), ("Kişisel Web Sitesi", "bi-globe2"), ("Diğer", "bi-link-45deg")
+    };
+    if (!string.IsNullOrEmpty(Model.IconClass) && !icons.Any(x => x.Icon == Model.IconClass))
+    {
+        icons.Insert(0, (Model.IconClass, Model.IconClass));
+    }
+}
+
+<div class="form-card" style="max-width: 820px;">
+    <form asp-area="Admin" asp-controller="SocialMedia" asp-action="@ViewData["FormAction"]" method="post">
+        <input type="hidden" asp-for="SocialMediaID" />
+
+        <div class="form-card-header">
+            <div class="form-card-icon"><i class="bi @Model.IconClass" id="iconPreview"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">@ViewData["FormTitle"]</h5>
+                <small class="text-secondary">Sitede küçük ikon butonu ve İletişim bölümünde satır olarak görünür.</small>
+            </div>
+        </div>
+
+        <div class="form-card-body">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label asp-for="IconClass" class="form-label">Platform / İkon <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                        <i class="bi bi-grid-3x3-gap"></i>
+                        <select asp-for="IconClass" class="form-select" id="iconSelect">
+                            @foreach (var i in icons)
+                            {
+                                <option value="@i.Icon" data-name="@i.Name">@i.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <span asp-validation-for="IconClass"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="PlatformName" class="form-label">Görünen Ad <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                        <i class="bi bi-type"></i>
+                        <input asp-for="PlatformName" class="form-control" id="platformName" placeholder="Örn: GitHub" />
+                    </div>
+                    <span asp-validation-for="PlatformName"></span>
+                </div>
+
+                <div class="col-md-9">
+                    <label asp-for="Url" class="form-label">Profil Adresi <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                        <i class="bi bi-link-45deg"></i>
+                        <input asp-for="Url" class="form-control" placeholder="https://github.com/kullaniciadi" />
+                    </div>
+                    <span asp-validation-for="Url"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="DisplayOrder" class="form-label">Sıra</label>
+                    <input asp-for="DisplayOrder" type="number" min="0" max="100" class="form-control" />
+                    <span asp-validation-for="DisplayOrder"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Durum</label>
+                    <div class="status-box">
+                        <div>
+                            <div class="fw-semibold" style="font-size: 0.86rem;">Sitede göster</div>
+                            <small class="text-secondary">Pasif hesaplar portfolyoda görünmez.</small>
+                        </div>
+                        <div class="form-check form-switch m-0">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card-footer">
+            <a href="/Admin/SocialMedia/SocialMediaList" class="btn btn-soft"><i class="bi bi-arrow-left me-1"></i> Vazgeç</a>
+            <button type="submit" class="btn btn-accent"><i class="bi bi-check2-circle me-1"></i> Kaydet</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    (function () {
+        const select = document.getElementById('iconSelect');
+        const preview = document.getElementById('iconPreview');
+        const name = document.getElementById('platformName');
+
+        select.addEventListener('change', function () {
+            preview.className = 'bi ' + this.value;
+            // Ad boşsa veya önceki platform adıyla aynıysa yeni platform adını yaz
+            const opt = this.options[this.selectedIndex];
+            const isKnown = Array.from(this.options).some(o => o.dataset.name === name.value);
+            if (!name.value || isKnown) name.value = opt.dataset.name === 'Diğer' ? '' : opt.dataset.name;
+        });
+    })();
+</script>

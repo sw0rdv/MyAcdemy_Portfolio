@@ -1,0 +1,136 @@
+@model MyAcdemy_Portfolio.Entities.Project
+@{
+    var categories = ViewBag.Categories as List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> ?? new();
+}
+
+<div class="form-card">
+    <form asp-area="Admin" asp-controller="Project" asp-action="@ViewData["FormAction"]" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ProjectID" />
+        <input type="hidden" asp-for="ProjectImageUrl" id="currentImageUrl" />
+
+        <div class="form-card-header">
+            <div class="form-card-icon"><i class="bi bi-grid"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">@ViewData["FormTitle"]</h5>
+                <small class="text-secondary">Kategori listesi veritabanından gelir. Görsel: JPG / PNG / WEBP, en fazla 2 MB.</small>
+            </div>
+        </div>
+
+        <div class="form-card-body">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label asp-for="ProjectName" class="form-label">Proje Adı <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                        <i class="bi bi-folder2"></i>
+                        <input asp-for="ProjectName" class="form-control" placeholder="Örn: E-Ticaret Paneli" />
+                    </div>
+                    <span asp-validation-for="ProjectName"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="CategoryID" class="form-label">Kategori <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                        <i class="bi bi-tag"></i>
+                        <select asp-for="CategoryID" asp-items="categories" class="form-select">
+                            <option value="0">-- Kategori Seçiniz --</option>
+                        </select>
+                    </div>
+                    <span asp-validation-for="CategoryID"></span>
+                    @if (!categories.Any())
+                    {
+                        <small class="text-danger d-block mt-1">Önce <a href="/Admin/Category/CreateCategory">kategori ekleyin</a>.</small>
+                    }
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="ProjectDescription" class="form-label">Açıklama <span class="req">*</span></label>
+                    <textarea asp-for="ProjectDescription" class="form-control" rows="4" placeholder="Projenin amacı, kullanılan teknolojiler..."></textarea>
+                    <span asp-validation-for="ProjectDescription"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="GithubUrl" class="form-label">GitHub Linki</label>
+                    <div class="input-icon-wrap">
+                        <i class="bi bi-github"></i>
+                        <input asp-for="GithubUrl" class="form-control" placeholder="https://github.com/..." />
+                    </div>
+                    <span asp-validation-for="GithubUrl"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="ProjectUrl" class="form-label">Canlı Demo Linki</label>
+                    <div class="input-icon-wrap">
+                        <i class="bi bi-box-arrow-up-right"></i>
+                        <input asp-for="ProjectUrl" class="form-control" placeholder="https://..." />
+                    </div>
+                    <span asp-validation-for="ProjectUrl"></span>
+                </div>
+
+                <div class="col-md-8">
+                    <label class="form-label" for="imageFile">Proje Görseli</label>
+                    <input type="file" name="imageFile" id="imageFile" class="form-control" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
+                    <span class="field-validation-error">@Html.ValidationMessage("imageFile")</span>
+                    <small class="text-secondary d-block mt-1">Yeni dosya seçmezseniz mevcut görsel korunur.</small>
+                    @if (!string.IsNullOrEmpty(Model.ProjectImageUrl))
+                    {
+                        <button type="button" class="btn btn-link btn-sm text-danger p-0 mt-1" id="removeImageBtn">
+                            <i class="bi bi-x-circle"></i> Mevcut görseli kaldır
+                        </button>
+                    }
+                </div>
+                <div class="col-md-4 text-center">
+                    <img id="imagePreview" src="@Model.ProjectImageUrl" alt="Önizleme"
+                         style="max-width:100%; max-height:130px; border-radius:10px; border:1px solid #E9ECF4; object-fit:cover; @(string.IsNullOrEmpty(Model.ProjectImageUrl) ? "display:none;" : "")" />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Durum</label>
+                    <div class="status-box">
+                        <div>
+                            <div class="fw-semibold" style="font-size: 0.86rem;">Yayında</div>
+                            <small class="text-secondary">Pasif projeler sitede görünmez.</small>
+                        </div>
+                        <div class="form-check form-switch m-0">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card-footer">
+            <a href="/Admin/Project/ProjectList" class="btn btn-soft"><i class="bi bi-arrow-left me-1"></i> Vazgeç</a>
+            <button type="submit" class="btn btn-accent"><i class="bi bi-check2-circle me-1"></i> Kaydet</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    (function () {
+        const file = document.getElementById('imageFile');
+        const preview = document.getElementById('imagePreview');
+        const removeBtn = document.getElementById('removeImageBtn');
+        const current = document.getElementById('currentImageUrl');
+
+        file.addEventListener('change', function () {
+            const f = this.files[0];
+            if (!f) return;
+            if (f.size > 2 * 1024 * 1024) {
+                Swal.fire({ icon: 'warning', title: 'Dosya çok büyük', text: 'Görsel en fazla 2 MB olabilir.', confirmButtonColor: '#8276D9' });
+                this.value = '';
+                return;
+            }
+            preview.src = URL.createObjectURL(f);
+            preview.style.display = '';
+        });
+
+        removeBtn && removeBtn.addEventListener('click', function () {
+            current.value = '';
+            file.value = '';
+            preview.style.display = 'none';
+            this.remove();
+        });
+    })();
+</script>

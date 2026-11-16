@@ -9,7 +9,7 @@
         public string Expert { get; set; }   
         public string Email { get; set; }
         public string Description { get; set; }
-        public string OpentoWork { get; set; }
+        public bool OpentoWork { get; set; }
 
     }
 }

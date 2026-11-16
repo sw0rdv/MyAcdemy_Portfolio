@@ -1,0 +1,94 @@
+﻿@model List<MyAcdemy_Portfolio.Entities.Project>
+@{
+    ViewData["Title"] = "Projeler";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="list-card">
+    <div class="list-card-header">
+        <div class="form-card-icon"><i class="bi bi-grid"></i></div>
+        <div>
+            <h5>Projeler</h5>
+            <small class="text-secondary">@Model.Count proje · @Model.Count(x => x.IsActive) yayında. Pasif projeler sitede görünmez.</small>
+        </div>
+        <div class="ms-auto">
+            <input type="search" id="tableSearch" class="form-control" placeholder="Proje veya kategori ara..." style="min-width:220px;" />
+            <a href="/Admin/Project/CreateProject" class="btn btn-accent"><i class="bi bi-plus-lg me-1"></i> Yeni Proje</a>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state"><i class="bi bi-folder2-open"></i>Henüz proje eklenmedi.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="admin-table" id="dataTable">
+                <thead>
+                    <tr>
+                        <th class="hide-sm">Görsel</th>
+                        <th>Proje</th>
+                        <th>Kategori</th>
+                        <th class="hide-sm">Bağlantılar</th>
+                        <th>Durum</th>
+                        <th style="text-align:right;">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="hide-sm">
+                                @if (!string.IsNullOrEmpty(item.ProjectImageUrl))
+                                {
+                                    <img src="@item.ProjectImageUrl" alt="@item.ProjectName" class="table-thumb" />
+                                }
+                                else
+                                {
+                                    <div class="table-thumb d-grid text-secondary" style="place-items:center;"><i class="bi bi-image"></i></div>
+                                }
+                            </td>
+                            <td>
+                                <div class="fw-semibold">@item.ProjectName</div>
+                                <small class="text-secondary d-block" style="max-width:360px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">@item.ProjectDescription</small>
+                            </td>
+                            <td><span class="badge-soft">@(item.Category?.CategoryName ?? "-")</span></td>
+                            <td class="hide-sm">
+                                @if (!string.IsNullOrEmpty(item.GithubUrl))
+                                {
+                                    <a href="@item.GithubUrl" target="_blank" rel="noopener" class="me-2" title="GitHub"><i class="bi bi-github"></i></a>
+                                }
+                                @if (!string.IsNullOrEmpty(item.ProjectUrl))
+                                {
+                                    <a href="@item.ProjectUrl" target="_blank" rel="noopener" title="Canlı"><i class="bi bi-box-arrow-up-right"></i></a>
+                                }
+                            </td>
+                            <td>
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge-status on">Aktif</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-status off">Pasif</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="row-actions">
+                                    <a href="/Admin/Project/ToggleStatus/@item.ProjectID" class="icon-btn toggle" title="@(item.IsActive ? "Pasife al" : "Yayına al")">
+                                        <i class="bi @(item.IsActive ? "bi-eye-slash" : "bi-eye")"></i>
+                                    </a>
+                                    <a href="/Admin/Project/UpdateProject/@item.ProjectID" class="icon-btn edit" title="Düzenle"><i class="bi bi-pencil"></i></a>
+                                    <a href="/Admin/Project/DeleteProject/@item.ProjectID" class="icon-btn del js-delete" data-name="@item.ProjectName" title="Sil"><i class="bi bi-trash3"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<partial name="_TableSearchScript" />

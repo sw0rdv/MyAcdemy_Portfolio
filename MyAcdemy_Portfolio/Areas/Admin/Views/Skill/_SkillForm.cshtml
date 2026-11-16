@@ -1,0 +1,74 @@
+@model MyAcdemy_Portfolio.Entities.Skill
+@{
+    var action = (string)ViewData["FormAction"]!;
+    var groups = ViewBag.Groups as List<string> ?? new List<string>();
+}
+
+<div class="form-card">
+    <form asp-area="Admin" asp-controller="Skill" asp-action="@action" method="post">
+        <input type="hidden" asp-for="SkillID" />
+
+        <div class="form-card-header">
+            <div class="form-card-icon"><i class="bi bi-code-slash"></i></div>
+            <div>
+                <h5 class="mb-0 fw-bold">@ViewData["FormTitle"]</h5>
+                <small class="text-secondary">Aynı grup adını yazdığınız yetenekler sitede tek kartta toplanır.</small>
+            </div>
+        </div>
+
+        <div class="form-card-body">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label asp-for="SkillName" class="form-label">Yetenek Adı <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                        <i class="bi bi-lightning-charge"></i>
+                        <input asp-for="SkillName" class="form-control" placeholder="Örn: ASP.NET Core" />
+                    </div>
+                    <span asp-validation-for="SkillName"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="SkillCategory" class="form-label">Grup <span class="req">*</span></label>
+                    <div class="input-icon-wrap">
+                        <i class="bi bi-collection"></i>
+                        <input asp-for="SkillCategory" class="form-control" list="skillGroups" placeholder="Örn: Backend Development" />
+                    </div>
+                    <datalist id="skillGroups">
+                        @foreach (var g in groups)
+                        {
+                            <option value="@g"></option>
+                        }
+                    </datalist>
+                    <span asp-validation-for="SkillCategory"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Percentage" class="form-label">Seviye: <b id="pctLabel">%@Model.Percentage</b></label>
+                    <input asp-for="Percentage" type="range" min="0" max="100" step="5" class="form-range" id="pctRange"
+                           oninput="document.getElementById('pctLabel').innerText = '%' + this.value" />
+                    <span asp-validation-for="Percentage"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Durum</label>
+                    <div class="status-box">
+                        <div>
+                            <div class="fw-semibold" style="font-size: 0.86rem;">Sitede göster</div>
+                            <small class="text-secondary">Pasif yetenekler portfolyoda görünmez.</small>
+                        </div>
+                        <div class="form-check form-switch m-0">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card-footer">
+            <a href="/Admin/Skill/SkillList" class="btn btn-soft"><i class="bi bi-arrow-left me-1"></i> Vazgeç</a>
+            <button type="submit" class="btn btn-accent"><i class="bi bi-check2-circle me-1"></i> Kaydet</button>
+        </div>
+    </form>
+</div>

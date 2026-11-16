@@ -1,0 +1,21 @@
+@model List<MyAcdemy_Portfolio.Entities.SocialMedia>
+@{
+    var colors = new[] { "bg-icon-mint", "bg-icon-peach", "bg-icon-purple", "bg-icon-blue" };
+
+    // "https://linkedin.com/in/x" -> "linkedin.com/in/x"
+    string Clean(string url) => url.Replace("https://", "").Replace("http://", "").Replace("www.", "").TrimEnd('/');
+}
+@* İletişim bölümündeki satırlar *@
+@for (var i = 0; i < Model.Count; i++)
+{
+    var item = Model[i];
+    <div class="contact-item">
+        <div class="contact-icon @colors[i % colors.Length]">
+            <i class="bi @item.IconClass"></i>
+        </div>
+        <div>
+            <div class="text-secondary small fw-medium">@item.PlatformName</div>
+            <a href="@item.Url" target="_blank" rel="noopener" class="text-decoration-none fw-bold text-dark">@Clean(item.Url)</a>
+        </div>
+    </div>
+}

@@ -1,0 +1,47 @@
+@model MyAcdemy_Portfolio.Entities.Contact
+
+<div class="contact-info-card">
+    <h4 class="fs-4 fw-bold mb-3">İletişim Bilgileri</h4>
+    @if (!string.IsNullOrEmpty(Model.Description))
+    {
+        <p class="text-secondary mb-4">@Model.Description</p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Email))
+    {
+        <div class="contact-item">
+            <div class="contact-icon bg-icon-purple">
+                <i class="bi bi-envelope"></i>
+            </div>
+            <div>
+                <div class="text-secondary small fw-medium">E-posta</div>
+                <a href="mailto:@Model.Email" class="text-decoration-none fw-bold text-dark">@Model.Email</a>
+            </div>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Location))
+    {
+        <div class="contact-item">
+            <div class="contact-icon bg-icon-blue">
+                <i class="bi bi-geo-alt"></i>
+            </div>
+            <div>
+                <div class="text-secondary small fw-medium">Konum</div>
+                <div class="fw-bold text-dark">@Model.Location</div>
+            </div>
+        </div>
+    }
+
+    @* LinkedIn, GitHub vb. hesaplar Sosyal Medya tablosundan gelir *@
+    @await Component.InvokeAsync("_DefaultSocialMediaComponentPartial", new { variant = "list" })
+
+    @if (!string.IsNullOrEmpty(Model.SubDescription))
+    {
+        <div class="mt-4 p-3 rounded-4 bg-white border border-light-subtle">
+            <div class="d-flex align-items-center gap-2 text-secondary small">
+                <i class="bi bi-clock-history text-primary"></i> @Model.SubDescription
+            </div>
+        </div>
+    }
+</div>

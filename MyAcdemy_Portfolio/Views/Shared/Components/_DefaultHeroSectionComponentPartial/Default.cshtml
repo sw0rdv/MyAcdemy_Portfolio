@@ -1,0 +1,99 @@
+﻿@model MyAcdemy_Portfolio.Entities.HeroSection
+@{
+    var contact = (MyAcdemy_Portfolio.Entities.Contact)ViewBag.Contact;
+    // Animasyon cümleleri: her satır bir cümle -> JS'e JSON olarak verilir
+    var sentences = (Model.TypingTexts ?? "")
+        .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+    var sentencesJson = System.Text.Json.JsonSerializer.Serialize(sentences);
+}
+
+<!-- Hero Section -->
+<section id="home">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <!-- Left Content -->
+            <div class="col-lg-7 reveal-on-scroll">
+                @if (!string.IsNullOrEmpty(Model.SubTitle))
+                {
+                    <div class="hero-badge">
+                        <span>👋</span> @Model.SubTitle
+                    </div>
+                }
+
+                <h1 class="hero-title">
+                    Merhaba, Ben <span class="hero-name-gradient">@Model.Title</span>.
+                </h1>
+
+                <!-- Animated Typing Text Slider -->
+                <div class="typing-container" aria-live="polite">
+                    <span id="typedText" data-sentences="@sentencesJson"></span><span class="typing-cursor"></span>
+                </div>
+
+                <p class="hero-desc">
+                    @Model.Description
+                </p>
+
+                <div class="d-flex flex-wrap gap-3 align-items-center mb-4">
+                    <a href="#projects" class="btn-custom-primary">
+                        <i class="bi bi-grid-fill"></i>
+                        Projelerimi İncele
+                    </a>
+                    <a href="#contact" class="btn-custom-outline">
+                        <i class="bi bi-chat-dots"></i>
+                        Benimle İletişime Geç
+                    </a>
+                </div>
+
+                <!-- Social Links (Sosyal Medya tablosundan) -->
+                <div class="d-flex align-items-center flex-wrap gap-2 pt-2">
+                    <span class="text-secondary small fw-medium me-2">Bağlantılar:</span>
+                    @await Component.InvokeAsync("_DefaultSocialMediaComponentPartial", new { variant = "buttons" })
+                    @if (!string.IsNullOrEmpty(contact.Email))
+                    {
+                        <a href="mailto:@contact.Email" class="social-btn" aria-label="E-posta Gönder">
+                            <i class="bi bi-envelope"></i>
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <!-- Right Visual with Portrait & Floating Badges -->
+            <div class="col-lg-5 reveal-on-scroll">
+                <div class="hero-image-wrapper">
+                    @if (!string.IsNullOrEmpty(Model.Card1Title))
+                    {
+                        <!-- Floating badge top left -->
+                        <div class="floating-card float-top-left">
+                            <div class="float-icon-box bg-icon-purple">
+                                <i class="bi bi-code-slash"></i>
+                            </div>
+                            <div>
+                                <div class="fw-bold small text-dark">@Model.Card1Title</div>
+                                <div class="text-secondary" style="font-size: 0.72rem;">@Model.Card1SubTitle</div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Main Portrait -->
+                    <div class="hero-image-frame">
+                        <img src="@Model.ImageUrl" alt="@Model.Title - @Model.SubTitle" loading="lazy">
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.Card2Title))
+                    {
+                        <!-- Floating badge bottom right -->
+                        <div class="floating-card float-bottom-right">
+                            <div class="float-icon-box bg-icon-mint">
+                                <i class="bi bi-laptop"></i>
+                            </div>
+                            <div>
+                                <div class="fw-bold small text-dark">@Model.Card2Title</div>
+                                <div class="text-secondary" style="font-size: 0.72rem;">@Model.Card2SubTitle</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

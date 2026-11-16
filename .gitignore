@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Admin panelinden yüklenen dosyalar (CV, proje görselleri) - kişisel veri, repoya eklenmez
+MyAcdemy_Portfolio/wwwroot/uploads/

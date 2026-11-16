@@ -1,0 +1,53 @@
+@model MyAcdemy_Portfolio.Entities.Certificate
+
+@{
+    ViewData["Title"] = "Yeni Sertifika Ekle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container">
+    <br />
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Yeni Sertifika Ekle</h4>
+        <a href="/Admin/Certificate/CertificateList" class="btn btn-outline-secondary">Listeye Dön</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form asp-area="Admin" asp-controller="Certificate" asp-action="CreateCertificate" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label">Sertifika Adı</label>
+                    <input asp-for="Title" class="form-control" placeholder="Örn: ASP.NET Core Web Development" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Issuer" class="form-label">Veren Kurum</label>
+                    <input asp-for="Issuer" class="form-control" placeholder="Örn: BTK Akademi" />
+                    <span asp-validation-for="Issuer" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Year" class="form-label">Yıl</label>
+                    <input asp-for="Year" class="form-control" placeholder="Örn: 2024" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="CertificateUrl" class="form-label">Sertifika Bağlantısı (opsiyonel)</label>
+                    <input asp-for="CertificateUrl" type="url" class="form-control" placeholder="https://..." />
+                    <span asp-validation-for="CertificateUrl" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+                <a href="/Admin/Certificate/CertificateList" class="btn btn-light">İptal</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

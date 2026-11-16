@@ -1,0 +1,13 @@
+@model MyAcdemy_Portfolio.Entities.SocialMedia
+@{
+    ViewData["Title"] = "Sosyal Medya Güncelle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    ViewData["FormAction"] = "UpdateSocialMedia";
+    ViewData["FormTitle"] = "Sosyal Medya Hesabını Güncelle";
+}
+
+<partial name="_SocialMediaForm" model="Model" view-data="ViewData" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

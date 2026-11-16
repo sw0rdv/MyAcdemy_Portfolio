@@ -1,0 +1,8 @@
+@model List<MyAcdemy_Portfolio.Entities.SocialMedia>
+@* İkon butonları: ana sayfa giriş bölümü ve footer *@
+@foreach (var item in Model)
+{
+    <a href="@item.Url" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="@item.PlatformName" title="@item.PlatformName">
+        <i class="bi @item.IconClass"></i>
+    </a>
+}

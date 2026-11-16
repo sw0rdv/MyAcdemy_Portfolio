@@ -1,0 +1,55 @@
+@model List<MyAcdemy_Portfolio.Entities.Category>
+@{
+    ViewData["Title"] = "Kategoriler";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="list-card">
+    <div class="list-card-header">
+        <div class="form-card-icon"><i class="bi bi-tags"></i></div>
+        <div>
+            <h5>Proje Kategorileri</h5>
+            <small class="text-secondary">Projeler bu kategorilere bağlıdır; sitedeki filtre butonları buradan gelir.</small>
+        </div>
+        <div class="ms-auto">
+            <a href="/Admin/Category/CreateCategory" class="btn btn-accent"><i class="bi bi-plus-lg me-1"></i> Yeni Kategori</a>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state"><i class="bi bi-tags"></i>Henüz kategori eklenmedi.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th class="hide-sm">ID</th>
+                        <th>Kategori</th>
+                        <th>Proje Sayısı</th>
+                        <th style="text-align:right;">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var count = item.Projects?.Count ?? 0;
+                        <tr>
+                            <td class="hide-sm text-secondary">@item.CategoryID</td>
+                            <td class="fw-semibold">@item.CategoryName</td>
+                            <td><span class="badge-soft">@count proje</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <a href="/Admin/Category/UpdateCategory/@item.CategoryID" class="icon-btn edit" title="Düzenle"><i class="bi bi-pencil"></i></a>
+                                    <a href="/Admin/Category/DeleteCategory/@item.CategoryID" class="icon-btn del js-delete" data-name="@item.CategoryName" title="Sil"><i class="bi bi-trash3"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

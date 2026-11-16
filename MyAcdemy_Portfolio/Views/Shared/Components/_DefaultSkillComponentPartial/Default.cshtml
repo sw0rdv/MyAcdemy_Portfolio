@@ -1,0 +1,91 @@
+@model List<IGrouping<string, MyAcdemy_Portfolio.Entities.Skill>>
+@{
+    var colors = new[] { "bg-icon-purple", "bg-icon-blue", "bg-icon-mint", "bg-icon-peach" };
+
+    // Grup adına göre uygun ikon (bilinmeyen gruplar için genel ikon)
+    string Icon(string group)
+    {
+        var g = group.ToLowerInvariant();
+        if (g.Contains("backend")) return "bi-hdd-network";
+        if (g.Contains("frontend")) return "bi-browser-chrome";
+        if (g.Contains("data") || g.Contains("veri")) return "bi-database";
+        if (g.Contains("tool") || g.Contains("araç")) return "bi-tools";
+        if (g.Contains("mimari") || g.Contains("architecture")) return "bi-diagram-3";
+        if (g.Contains("mobil") || g.Contains("mobile")) return "bi-phone";
+        return "bi-code-slash";
+    }
+}
+
+<!-- Technical Skills Section -->
+<section id="skills" style="background-color: var(--bg-secondary);">
+    <div class="container">
+        <div class="text-center mb-5 reveal-on-scroll">
+            <span class="section-eyebrow">TEKNİK YETKİNLİKLER</span>
+            <h2 class="section-title">Yeteneklerim</h2>
+            <p class="section-subtitle">Fikirleri çalışan yazılımlara dönüştürürken kullandığım teknolojiler.</p>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <p class="text-center text-secondary">Yetenekler yakında eklenecek.</p>
+        }
+
+        <div class="row g-4">
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                var group = Model[i];
+                <div class="col-lg-4 col-md-6 reveal-on-scroll">
+                    <div class="skill-group-card">
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                            <div class="float-icon-box @colors[i % colors.Length]">
+                                <i class="bi @Icon(group.Key)"></i>
+                            </div>
+                            <h4 class="fs-5 fw-bold mb-0">@group.Key</h4>
+                        </div>
+
+                        @foreach (var skill in group)
+                        {
+                            <div class="skill-level mb-3">
+                                <div class="d-flex justify-content-between small mb-1">
+                                    <span class="fw-semibold text-dark">@skill.SkillName</span>
+                                    <span class="text-secondary fw-semibold">%@skill.Percentage</span>
+                                </div>
+                                <div class="skill-track" role="progressbar" aria-label="@skill.SkillName"
+                                     aria-valuenow="@skill.Percentage" aria-valuemin="0" aria-valuemax="100">
+                                    <span class="skill-fill" style="--pct:@(skill.Percentage)%;"></span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .skill-track {
+        height: 8px;
+        background: #EEF0F6;
+        border-radius: 99px;
+        overflow: hidden;
+    }
+
+    .skill-fill {
+        display: block;
+        height: 100%;
+        width: 0;
+        border-radius: 99px;
+        background: linear-gradient(90deg, #A99FEA, #6A5DCB);
+        transition: width 1.1s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    /* Kart ekrana girince (reveal-on-scroll -> revealed) çubuklar dolar */
+    .revealed .skill-fill {
+        width: var(--pct);
+    }
+
+    @@media (prefers-reduced-motion: reduce) {
+        .skill-fill { transition: none; }
+    }
+</style>

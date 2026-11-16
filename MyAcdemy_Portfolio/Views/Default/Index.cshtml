@@ -1,0 +1,436 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="tr">
+    @await Component.InvokeAsync("_DefaultHeadComponentPartial")
+
+<body>
+
+    @await Component.InvokeAsync("_DefaultNavBarComponent")
+
+    @await Component.InvokeAsync("_DefaultHeroSectionComponentPartial")
+
+
+  <!-- Infinite Soft Marquee for Technologies -->
+  <div class="marquee-container">
+    <div class="marquee-track">
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> C# .NET</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> ASP.NET Core</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> Microsoft SQL Server</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> Entity Framework Core</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> RESTful API Design</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> Clean Architecture</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> Bootstrap 5</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> JavaScript (ES6+)</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> Docker & Git</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> PostgreSQL</div>
+      <!-- Duplicate for seamless infinite loop -->
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> C# .NET</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> ASP.NET Core</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> Microsoft SQL Server</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> Entity Framework Core</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> RESTful API Design</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> Clean Architecture</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> Bootstrap 5</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> JavaScript (ES6+)</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> Docker & Git</div>
+      <div class="marquee-item"><i class="bi bi-check2-circle"></i> PostgreSQL</div>
+    </div>
+  </div>
+
+  @await Component.InvokeAsync("_DefaultAboutComponentPartial")
+
+  @await Component.InvokeAsync("_DefaultEducationComponentPartial")
+
+  @await Component.InvokeAsync("_DefaultExperienceComponentPartial")
+
+  @await Component.InvokeAsync("_DefaultSkillComponentPartial")
+
+    @await Component.InvokeAsync("_DefaultProjectComponentPartial")
+
+  <!-- Personal Workflow Section -->
+  <section id="workflow" style="background-color: var(--bg-secondary);">
+    <div class="container">
+      <div class="text-center mb-5 reveal-on-scroll">
+        <span class="section-eyebrow">NASIL ÇALIŞIYORUM?</span>
+        <h2 class="section-title">Fikirden Ürüne Yolculuk</h2>
+        <p class="section-subtitle">Her projeye planlı, sürdürülebilir ve kullanıcı odaklı bir yaklaşımla başlıyorum.</p>
+      </div>
+
+      <div class="row g-4 position-relative">
+        <!-- Step 1 -->
+        <div class="col-lg-3 col-md-6 reveal-on-scroll">
+          <div class="workflow-step-card">
+            <div class="workflow-num">01</div>
+            <div class="float-icon-box bg-icon-purple mb-3">
+              <i class="bi bi-search"></i>
+            </div>
+            <h4 class="fs-5 fw-bold mb-2">Analiz</h4>
+            <p class="text-secondary small mb-0">İhtiyaçları ve hedefleri anlayarak doğru çözümü planlarım.</p>
+            <div class="workflow-arrow d-none d-lg-flex">
+              <i class="bi bi-arrow-right-short fs-5"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="col-lg-3 col-md-6 reveal-on-scroll">
+          <div class="workflow-step-card">
+            <div class="workflow-num">02</div>
+            <div class="float-icon-box bg-icon-blue mb-3">
+              <i class="bi bi-palette"></i>
+            </div>
+            <h4 class="fs-5 fw-bold mb-2">Tasarım</h4>
+            <p class="text-secondary small mb-0">Uygulama mimarisini ve kullanıcı deneyimini şekillendiririm.</p>
+            <div class="workflow-arrow d-none d-lg-flex">
+              <i class="bi bi-arrow-right-short fs-5"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="col-lg-3 col-md-6 reveal-on-scroll">
+          <div class="workflow-step-card">
+            <div class="workflow-num">03</div>
+            <div class="float-icon-box bg-icon-mint mb-3">
+              <i class="bi bi-code-square"></i>
+            </div>
+            <h4 class="fs-5 fw-bold mb-2">Geliştirme</h4>
+            <p class="text-secondary small mb-0">Temiz, sürdürülebilir ve ölçeklenebilir kod geliştiririm.</p>
+            <div class="workflow-arrow d-none d-lg-flex">
+              <i class="bi bi-arrow-right-short fs-5"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="col-lg-3 col-md-6 reveal-on-scroll">
+          <div class="workflow-step-card">
+            <div class="workflow-num">04</div>
+            <div class="float-icon-box bg-icon-peach mb-3">
+              <i class="bi bi-check2-circle"></i>
+            </div>
+            <h4 class="fs-5 fw-bold mb-2">Test ve İyileştirme</h4>
+            <p class="text-secondary small mb-0">Kalite, performans ve kullanılabilirlik odaklı testler gerçekleştiririm.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section id="certificates">
+    <div class="container">
+      <div class="text-center mb-5 reveal-on-scroll">
+        <span class="section-eyebrow">SÜREKLİ ÖĞRENME</span>
+        <h2 class="section-title">Sertifikalarım</h2>
+        <p class="section-subtitle">Teknik becerilerimi geliştirmek için tamamladığım eğitimler.</p>
+      </div>
+
+      @await Component.InvokeAsync("_DefaultCertificateComponentPartial")
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" style="background-color: var(--bg-secondary);">
+    <div class="container">
+      <div class="text-center mb-5 reveal-on-scroll">
+        <span class="section-eyebrow">İLETİŞİME GEÇELİM</span>
+        <h2 class="section-title">Birlikte Harika İşler Üretebiliriz.</h2>
+        <p class="section-subtitle">Yeni projeler, iş birlikleri veya yalnızca merhaba demek için benimle iletişime geçebilirsiniz.</p>
+      </div>
+
+      <div class="row g-5">
+        <!-- Left: Contact Details -->
+        <div class="col-lg-5 reveal-on-scroll">
+          @await Component.InvokeAsync("_DefaultContactComponentPartial")
+        </div>
+
+        <!-- Right: Contact Form -->
+        <div class="col-lg-7 reveal-on-scroll">
+          <div class="contact-form-card">
+            <!-- Mesaj veritabanına kaydedilir: POST /Default/SendMessage (sunucu tarafında Data Annotations ile doğrulanır) -->
+            <form id="contactForm" action="/Default/SendMessage" method="post" novalidate>
+              @Html.AntiForgeryToken()
+
+              <div id="formSuccessMessage" class="alert alert-success border-0 rounded-3 small py-2 px-3 mb-4 d-none" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i> Mesajınız başarıyla iletildi! En kısa sürede dönüş yapacağım.
+              </div>
+              <div id="formErrorMessage" class="alert alert-danger border-0 rounded-3 small py-2 px-3 mb-4 d-none" role="alert"></div>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="contactFullName" class="form-label">Adınız Soyadınız *</label>
+                  <input type="text" class="form-control" id="contactFullName" name="NameSurname" placeholder="Örn: Ahmet Yılmaz" required minlength="3" maxlength="100">
+                  <div class="invalid-feedback" data-for="NameSurname">Lütfen adınızı ve soyadınızı giriniz (en az 3 karakter).</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="contactEmail" class="form-label">E-posta Adresiniz *</label>
+                  <input type="email" class="form-control" id="contactEmail" name="Email" placeholder="Örn: ahmet@example.com" required maxlength="150">
+                  <div class="invalid-feedback" data-for="Email">Geçerli bir e-posta adresi giriniz.</div>
+                </div>
+
+                <div class="col-12">
+                  <label for="contactSubject" class="form-label">Konu *</label>
+                  <input type="text" class="form-control" id="contactSubject" name="Subject" placeholder="Örn: Proje İş Birliği veya Danışmanlık" required minlength="3" maxlength="150">
+                  <div class="invalid-feedback" data-for="Subject">Lütfen mesaj konusunu belirtiniz (en az 3 karakter).</div>
+                </div>
+
+                <div class="col-12">
+                  <label for="contactMessage" class="form-label">Mesajınız *</label>
+                  <textarea class="form-control" id="contactMessage" name="MessageDetail" rows="5" placeholder="Projeniz veya paylaşmak istedikleriniz hakkında detay verebilirsiniz..." required minlength="10" maxlength="4000"></textarea>
+                  <div class="invalid-feedback" data-for="MessageDetail">Lütfen mesajınızı yazınız (en az 10 karakter).</div>
+                </div>
+
+                <div class="col-12 mt-4">
+                  <button type="submit" id="contactSubmitBtn" class="btn-custom-primary w-100 justify-content-center py-3">
+                    <i class="bi bi-send-fill"></i> Mesaj Gönder
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  @await Component.InvokeAsync("_DefaultFooterComponentPartial")
+
+  <!-- Scroll To Top Button -->
+  <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Sayfanın Başına Çık">
+    <i class="bi bi-chevron-up"></i>
+  </button>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Vanilla JavaScript Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      
+      // 1. TYPING ANIMATION (Turkish sentences, letter-by-letter, infinite loop)
+      // Cümleler admin panelindeki "Ana Sayfa Giriş" ekranından gelir (data-sentences)
+      const typedTextElement = document.getElementById('typedText');
+      let sentences = [];
+      try { sentences = JSON.parse(typedTextElement?.dataset.sentences || '[]'); } catch (e) { }
+      let sentenceIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+      const typeSpeed = 75;      // 60-90ms typing delay
+      const backSpeed = 40;      // deleting speed
+      const waitTime = 1800;     // ~1800ms display time once finished
+
+      function typeLoop() {
+        const currentSentence = sentences[sentenceIndex];
+
+        if (isDeleting) {
+          typedTextElement.textContent = currentSentence.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          typedTextElement.textContent = currentSentence.substring(0, charIndex + 1);
+          charIndex++;
+        }
+
+        let currentDelay = isDeleting ? backSpeed : typeSpeed;
+
+        if (!isDeleting && charIndex === currentSentence.length) {
+          currentDelay = waitTime;
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          sentenceIndex = (sentenceIndex + 1) % sentences.length;
+          currentDelay = 350; // pause before next sentence
+        }
+
+        setTimeout(typeLoop, currentDelay);
+      }
+
+      if (typedTextElement && sentences.length > 0) {
+        setTimeout(typeLoop, 500);
+      }
+
+      // 2. NAVBAR SCROLL EFFECT & SCROLL TO TOP VISIBILITY
+      const navbar = document.getElementById('mainNavbar');
+      const scrollTopBtn = document.getElementById('scrollToTopBtn');
+
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+          scrollTopBtn.classList.add('visible');
+        } else {
+          navbar.classList.remove('scrolled');
+          scrollTopBtn.classList.remove('visible');
+        }
+      }, { passive: true });
+
+      // Scroll to Top action
+      if (scrollTopBtn) {
+        scrollTopBtn.addEventListener('click', function () {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      }
+
+      // NAVBAR AKTİF LİNK (scrollspy)
+      // Sayfadaki tüm bölümleri sırayla tarar; ekranın üstünü geçmiş son bölüm "şu anki bölüm" olur.
+      // O bölümün navbar'da linki yoksa (ör. Çalışma Yaklaşımım) hiçbir link seçili kalmaz,
+      // böylece önceki link (Projelerim) takılı kalmaz.
+      const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+      const allSections = Array.from(document.querySelectorAll('section[id]'));
+
+      function updateActiveNav() {
+        const offset = (navbar ? navbar.offsetHeight : 0) + 40;
+        let currentId = allSections.length ? allSections[0].id : '';
+
+        allSections.forEach(function (section) {
+          if (section.getBoundingClientRect().top - offset <= 0) {
+            currentId = section.id;
+          }
+        });
+
+        // Sayfanın en altına gelindiyse son bölümü seç (kısa İletişim bölümü için)
+        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2 && allSections.length) {
+          currentId = allSections[allSections.length - 1].id;
+        }
+
+        navLinks.forEach(function (link) {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveNav, { passive: true });
+      window.addEventListener('resize', updateActiveNav);
+      updateActiveNav();
+
+      // Close mobile navbar on nav-link click
+      const navbarCollapse = document.getElementById('navbarContent');
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          if (window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
+            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+            if (bsCollapse) {
+              bsCollapse.hide();
+            }
+          }
+        });
+      });
+
+      // 3. PROJECT FILTERING (Vanilla JS, data-category)
+      const filterButtons = document.querySelectorAll('#projectFilterGroup .filter-btn');
+      const projectItems = document.querySelectorAll('.project-item');
+
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+
+          const filterValue = this.getAttribute('data-filter');
+
+          projectItems.forEach(item => {
+            const itemCategory = item.getAttribute('data-category');
+            if (filterValue === 'all' || itemCategory === filterValue) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // 4. SCROLL REVEAL (IntersectionObserver)
+      const revealElements = document.querySelectorAll('.reveal-on-scroll');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.12,
+          rootMargin: "0px 0px -40px 0px"
+        });
+
+        revealElements.forEach(el => observer.observe(el));
+      } else {
+        // Fallback for older browsers
+        revealElements.forEach(el => el.classList.add('revealed'));
+      }
+
+      // 5. CONTACT FORM: tarayıcıda ön kontrol + sunucuya gönderim (veritabanına kayıt)
+      //    Asıl doğrulama sunucuda (Message entity'deki Data Annotations + ModelState) yapılır;
+      //    sunucudan dönen hata mesajları ilgili alanın altına yazılır.
+      const contactForm = document.getElementById('contactForm');
+      const formSuccessMessage = document.getElementById('formSuccessMessage');
+      const formErrorMessage = document.getElementById('formErrorMessage');
+      const submitBtn = document.getElementById('contactSubmitBtn');
+
+      function clearServerErrors() {
+        contactForm.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+        formErrorMessage.classList.add('d-none');
+      }
+
+      function showServerErrors(errors) {
+        contactForm.classList.remove('was-validated');
+        Object.keys(errors).forEach(function (field) {
+          const input = contactForm.querySelector('[name="' + field + '"]');
+          const feedback = contactForm.querySelector('.invalid-feedback[data-for="' + field + '"]');
+          if (input) input.classList.add('is-invalid');
+          if (feedback) feedback.textContent = errors[field];
+        });
+      }
+
+      if (contactForm) {
+        contactForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          clearServerErrors();
+          formSuccessMessage.classList.add('d-none');
+
+          if (!contactForm.checkValidity()) {
+            contactForm.classList.add('was-validated');
+            return;
+          }
+
+          submitBtn.disabled = true;
+          const originalHtml = submitBtn.innerHTML;
+          submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Gönderiliyor...';
+
+          fetch(contactForm.action, { method: 'POST', body: new FormData(contactForm) })
+            .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+            .then(function (result) {
+              if (result.ok && result.data.success) {
+                contactForm.classList.remove('was-validated');
+                contactForm.reset();
+                formSuccessMessage.classList.remove('d-none');
+                setTimeout(function () { formSuccessMessage.classList.add('d-none'); }, 6000);
+              } else if (result.data && result.data.errors) {
+                showServerErrors(result.data.errors);
+              } else {
+                throw new Error();
+              }
+            })
+            .catch(function () {
+              formErrorMessage.textContent = 'Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin.';
+              formErrorMessage.classList.remove('d-none');
+            })
+            .finally(function () {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalHtml;
+            });
+        });
+      }
+
+    });
+  </script>
+</body>
+</html>

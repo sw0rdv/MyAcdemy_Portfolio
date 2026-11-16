@@ -1,7 +1,12 @@
+using Microsoft.Build.Framework;
+using MyAcdemy_Portfolio.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<PortfolioContext>();
 
 var app = builder.Build();
 
@@ -20,9 +25,17 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+});
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Default}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 

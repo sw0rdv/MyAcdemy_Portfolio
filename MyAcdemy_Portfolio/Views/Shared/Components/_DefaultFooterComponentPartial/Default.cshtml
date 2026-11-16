@@ -1,0 +1,49 @@
+@model MyAcdemy_Portfolio.Entities.Contact
+@{
+    string name = ViewBag.NameSurname ?? "";
+    string first = name.Split(' ', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? "";
+}
+
+<footer>
+    <div class="container">
+        <div class="row g-4 align-items-center mb-5">
+            <!-- Col 1: Brand -->
+            <div class="col-lg-4 text-center text-lg-start">
+                <a class="navbar-brand d-inline-flex align-items-center mb-2" href="#home">
+                    <span class="brand-mark">@(first.Length > 0 ? first[0].ToString() : "P")</span>
+                    <span class="brand-name">@first<span>.</span></span>
+                </a>
+                <p class="text-secondary small mb-0">Teknoloji, tasarım ve yaratıcılıkla geliştirildi.</p>
+            </div>
+
+            <!-- Col 2: Navigation Links -->
+            <div class="col-lg-4 text-center">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item mx-2"><a href="#home" class="footer-link">Ana Sayfa</a></li>
+                    <li class="list-inline-item mx-2"><a href="#about" class="footer-link">Hakkımda</a></li>
+                    <li class="list-inline-item mx-2"><a href="#projects" class="footer-link">Projelerim</a></li>
+                    <li class="list-inline-item mx-2"><a href="#contact" class="footer-link">İletişim</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Social Links -->
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="d-inline-flex flex-wrap gap-2">
+                    @await Component.InvokeAsync("_DefaultSocialMediaComponentPartial", new { variant = "buttons" })
+                    @if (!string.IsNullOrEmpty(Model.Email))
+                    {
+                        <a href="mailto:@Model.Email" class="social-btn" aria-label="E-posta">
+                            <i class="bi bi-envelope"></i>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <hr class="text-secondary opacity-25 mb-4">
+
+        <div class="text-center">
+            <p class="text-secondary small mb-0">© @DateTime.Now.Year @name. Tüm hakları saklıdır.</p>
+        </div>
+    </div>
+</footer>

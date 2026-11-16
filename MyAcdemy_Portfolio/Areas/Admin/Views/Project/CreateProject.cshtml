@@ -1,0 +1,13 @@
+﻿@model MyAcdemy_Portfolio.Entities.Project
+@{
+    ViewData["Title"] = "Yeni Proje";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    ViewData["FormAction"] = "CreateProject";
+    ViewData["FormTitle"] = "Yeni Proje Ekle";
+}
+
+<partial name="_ProjectForm" model="Model" view-data="ViewData" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

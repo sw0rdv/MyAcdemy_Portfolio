@@ -1,0 +1,95 @@
+@model MyAcdemy_Portfolio.Entities.HeroSection
+@{
+    ViewData["Title"] = "Ana Sayfa Giriş";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Ana Sayfa Giriş (Hero)</h4>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Giriş Bölümünü Güncelle</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-sub">
+                            Site açıldığında ilk görünen isim, unvan, açıklama, fotoğraf ve kartları buradan güncelleyebilirsiniz.
+                        </div>
+
+                        <form method="post" asp-area="Admin" asp-controller="HeroSection" asp-action="UpdateHeroSection">
+                            <input type="hidden" asp-for="HeroSectionId" />
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Title">Ad Soyad (Merhaba, Ben ...)</label>
+                                    <input type="text" asp-for="Title" class="form-control" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="SubTitle">Unvan (üstteki rozet)</label>
+                                    <input type="text" asp-for="SubTitle" class="form-control" />
+                                    <span asp-validation-for="SubTitle" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label asp-for="Description">Açıklama</label>
+                                    <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-9 mb-3">
+                                    <label asp-for="ImageUrl">Fotoğraf URL</label>
+                                    <input type="text" asp-for="ImageUrl" id="heroImageUrl" class="form-control" placeholder="https://... veya /images/profil.jpg" />
+                                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-3 text-center">
+                                    <img id="heroImagePreview" src="@Model.ImageUrl" alt="Önizleme"
+                                         style="max-height: 110px; max-width: 100%; border-radius: 12px; object-fit: cover; @(string.IsNullOrEmpty(Model.ImageUrl) ? "display:none;" : "")" />
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label asp-for="TypingTexts">Yazı Animasyonu Cümleleri (her satıra bir cümle)</label>
+                                    <textarea asp-for="TypingTexts" class="form-control" rows="4"></textarea>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Card1Title">Sol Üst Kart Başlık</label>
+                                    <input type="text" asp-for="Card1Title" class="form-control" placeholder="Clean Code" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Card1SubTitle">Sol Üst Kart Alt Yazı</label>
+                                    <input type="text" asp-for="Card1SubTitle" class="form-control" placeholder="C# & ASP.NET Core" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Card2Title">Sağ Alt Kart Başlık</label>
+                                    <input type="text" asp-for="Card2Title" class="form-control" placeholder="Software Engineer" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Card2SubTitle">Sağ Alt Kart Alt Yazı</label>
+                                    <input type="text" asp-for="Card2SubTitle" class="form-control" placeholder="Full Stack Developer" />
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-success">Kaydet</button>
+                            <a href="/Admin/Dashboard/Index" class="btn btn-secondary">Vazgeç</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Fotoğraf URL'si değişince önizlemeyi güncelle
+    document.getElementById('heroImageUrl').addEventListener('input', function () {
+        const img = document.getElementById('heroImagePreview');
+        img.src = this.value;
+        img.style.display = this.value ? '' : 'none';
+    });
+</script>

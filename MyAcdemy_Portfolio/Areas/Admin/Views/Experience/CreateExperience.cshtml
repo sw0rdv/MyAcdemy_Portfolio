@@ -1,0 +1,13 @@
+@model MyAcdemy_Portfolio.Entities.Experience
+@{
+    ViewData["Title"] = "Yeni Deneyim";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    ViewData["FormAction"] = "CreateExperience";
+    ViewData["FormTitle"] = "Yeni Deneyim Ekle";
+}
+
+<partial name="_ExperienceForm" model="Model" view-data="ViewData" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,73 @@
+@model List<MyAcdemy_Portfolio.Entities.Skill>
+@{
+    ViewData["Title"] = "Yetenekler";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="list-card">
+    <div class="list-card-header">
+        <div class="form-card-icon"><i class="bi bi-code-slash"></i></div>
+        <div>
+            <h5>Yetenekler</h5>
+            <small class="text-secondary">Sitede gruplara ayrılmış seviye çubuklarıyla görünür. Toplam @Model.Count yetenek.</small>
+        </div>
+        <div class="ms-auto">
+            <input type="search" id="tableSearch" class="form-control" placeholder="Yetenek ara..." style="min-width:200px;" />
+            <a href="/Admin/Skill/CreateSkill" class="btn btn-accent"><i class="bi bi-plus-lg me-1"></i> Yeni Yetenek</a>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state"><i class="bi bi-code-square"></i>Henüz yetenek eklenmedi.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="admin-table" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Yetenek</th>
+                        <th class="hide-sm">Grup</th>
+                        <th>Seviye</th>
+                        <th>Durum</th>
+                        <th style="text-align:right;">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@item.SkillName</td>
+                            <td class="hide-sm"><span class="badge-soft">@item.SkillCategory</span></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="skill-bar flex-grow-1"><span style="width:@(item.Percentage)%"></span></div>
+                                    <b style="font-size:.8rem;">%@item.Percentage</b>
+                                </div>
+                            </td>
+                            <td>
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge-status on">Aktif</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-status off">Pasif</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="row-actions">
+                                    <a href="/Admin/Skill/UpdateSkill/@item.SkillID" class="icon-btn edit" title="Düzenle"><i class="bi bi-pencil"></i></a>
+                                    <a href="/Admin/Skill/DeleteSkill/@item.SkillID" class="icon-btn del js-delete" data-name="@item.SkillName" title="Sil"><i class="bi bi-trash3"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<partial name="_TableSearchScript" />
